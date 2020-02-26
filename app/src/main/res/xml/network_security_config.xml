@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" >
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+            <certificates src="@raw/my_ca"/>
+        </trust-anchors>
+    </base-config>
+
+    <domain-config  cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">thesportsdb.com</domain>
+        <domain includeSubdomains="true">www.thesportsdb.com</domain>
+        <domain includeSubdomains="true">www.thesportsdb.com/api</domain>
+        <domain includeSubdomains="true">sni.cloudflaressl.com</domain>
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+            <certificates src="@raw/my_ca"/>
+        </trust-anchors>
+    </domain-config>
+</network-security-config>
