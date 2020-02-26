@@ -1,5 +1,6 @@
 package com.seboba.sports.ui.search
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,13 +15,13 @@ import com.seboba.sports.ui.details.EventListFragment
 import kotlinx.android.synthetic.main.main_fragment.*
 
 
-class MainFragment : Fragment() {
+class SearchFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = SearchFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: SearchViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -43,7 +44,7 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider.NewInstanceFactory().create(MainViewModel::class.java)
+        viewModel = ViewModelProvider.NewInstanceFactory().create(SearchViewModel::class.java)
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -55,6 +56,10 @@ class MainFragment : Fragment() {
             respondToSearch()
             return@setOnEditorActionListener true
         }
+
+        val prefs = requireContext().getSharedPreferences("Dope Prefs", Context.MODE_PRIVATE)
+
+
     }
 
 }

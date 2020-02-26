@@ -12,7 +12,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 
-class FavoritesViewModel : ViewModel() {
+class SearchViewModel : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
     private val dataSource = SportsRemoteDataSource()
@@ -30,10 +30,6 @@ class FavoritesViewModel : ViewModel() {
         loadTeams(term)
     }
 
-    init {
-        loadTeams("Dortmund")
-    }
-
     private fun loadTeams(term: String) {
         compositeDisposable.add(
         dataSource.searchTeams(term)
@@ -48,4 +44,19 @@ class FavoritesViewModel : ViewModel() {
         )
     }
 
+}
+
+fun List<TeamsModel>.toUITeam(): List<UITeam>? = map { it.toUITeam() }
+
+fun TeamsModel.toUITeam(): UITeam {
+    return UITeam(
+        id = idTeam,
+        name = strTeam ?: "Unknown",
+        iconURL = strTeamBadge,
+        bannerURL = strTeamBanner,
+        fanArtURL = strTeamFanart1,
+        isFavorite = false,
+        sport = strSport ?: "Unknown",
+        score = strDivision ?: strLeague ?: "Unknown"
+    )
 }

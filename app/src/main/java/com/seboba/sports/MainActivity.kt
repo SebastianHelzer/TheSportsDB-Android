@@ -1,36 +1,34 @@
 package com.seboba.sports
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.seboba.sports.ui.fragments.FavoritesFragment
-import com.seboba.sports.ui.search.MainFragment
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.seboba.sports.ui.favorites.FavoritesFragment
+import com.seboba.sports.ui.search.SearchFragment
 import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity() {
+
+    private fun setFragment(fragment: Fragment){
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, fragment)
+            .commitNow()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, MainFragment.newInstance())
-                    .commitNow()
+            setFragment(SearchFragment.newInstance())
         }
 
         bottom_nav.setOnNavigationItemSelectedListener {
             when(it.itemId) {
-                R.id.action_search -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, MainFragment.newInstance())
-                        .commitNow()
-                }
-                R.id.action_settings -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, FavoritesFragment.newInstance())
-                        .commitNow()
-                }
+                R.id.action_search -> setFragment(SearchFragment.newInstance())
+                R.id.action_settings -> setFragment(FavoritesFragment.newInstance())
             }
             return@setOnNavigationItemSelectedListener true
         }
+
     }
 }

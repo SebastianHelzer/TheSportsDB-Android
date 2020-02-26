@@ -33,11 +33,11 @@ class SportsRemoteDataSource: SportsDataSource {
     }
 
 
-    override fun searchTeams(term: String): Observable<TeamsResponseModel?> {
+    override fun searchTeams(term: String): Single<TeamsResponseModel?> {
         return api.searchTeams(term)
     }
 
-    override fun getTeamEvents(teamID: Int): Observable<TeamGamesResponseModel> {
+    override fun getTeamEvents(teamID: Int): Single<TeamGamesResponseModel> {
         return api.getTeamEvents(teamID)
     }
 
@@ -45,7 +45,7 @@ class SportsRemoteDataSource: SportsDataSource {
         return api.getTeamDetails(teamID)
     }
 
-    override fun getEventDetails(eventID: Int): Observable<EventResponseModel> {
+    override fun getEventDetails(eventID: Int): Single<EventResponseModel> {
         return api.getEventDetails(eventID)
     }
 

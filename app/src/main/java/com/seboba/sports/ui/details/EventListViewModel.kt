@@ -42,12 +42,12 @@ class EventListViewModel : ViewModel() {
         dataSource.getTeamEvents(teamID)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnEach {
-                val ids = it.value?.results?.map { listOf(it.idAwayTeam, it.idHomeTeam) }?.flatten()
+            .doAfterSuccess { responseModel ->
+                val ids = responseModel?.results?.map { listOf(it.idAwayTeam, it.idHomeTeam) }?.flatten()
                 ids?.let { loadTeamImagesURLSByIds(it) }
             }
             .subscribe ({
-                it?.let { eventResponse.value = it.results.toUIEvents() }
+                it?.let { eventResponse.value = it.results?.toUIEvents() ?: emptyList() }
             }, {
                 Log.e("What happened?", it?.localizedMessage.toString())
             })

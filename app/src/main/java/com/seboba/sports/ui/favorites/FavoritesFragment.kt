@@ -1,17 +1,16 @@
-package com.seboba.sports.ui.fragments
+package com.seboba.sports.ui.favorites
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.seboba.sports.R
 import com.seboba.sports.model.UITeam
 import com.seboba.sports.ui.details.EventListFragment
-import com.seboba.sports.ui.search.FavoritesViewModel
 import com.seboba.sports.ui.search.TeamsAdapter
 import kotlinx.android.synthetic.main.main_fragment.*
 
@@ -41,7 +40,7 @@ class FavoritesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider.NewInstanceFactory().create(FavoritesViewModel::class.java)
+        viewModel = FavoritesViewModel(requireContext().getSharedPreferences("Dope Prefs", Context.MODE_PRIVATE))
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
