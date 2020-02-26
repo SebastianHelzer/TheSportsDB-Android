@@ -26,7 +26,7 @@ class EventListFragment : DialogFragment() {
             arguments = bundleOf(ID_KEY to teamID)
         }
 
-        val ID_KEY = "TEAM_ID"
+        const val ID_KEY = "TEAM_ID"
     }
 
     private lateinit var viewModel: EventListViewModel

@@ -7,11 +7,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.seboba.remote.sports.SportsRemoteDataSource
 import com.seboba.sports.model.UITeam
-import com.seboba.sports.ui.search.toUITeam
+import com.seboba.sports.model.toUITeam
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.lang.Exception
 
 
 class FavoritesViewModel(private val prefs: SharedPreferences) : ViewModel() {
@@ -44,7 +45,7 @@ class FavoritesViewModel(private val prefs: SharedPreferences) : ViewModel() {
             Observable.fromIterable(prefs.all.values.filterIsInstance<Int>())
                 .filter { it != 0 }
                 .flatMapSingle { dataSource.getTeamDetails(it) }
-                .map { it.teams.first().toUITeam() }
+                .map { it.teams?.first()?.toUITeam() ?: throw Exception("Team not loaded") }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

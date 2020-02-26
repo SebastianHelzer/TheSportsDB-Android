@@ -8,7 +8,7 @@ import com.seboba.remote.sports.Results
 import com.seboba.remote.sports.SportsRemoteDataSource
 import com.seboba.sports.model.UIEvent
 import com.seboba.sports.model.UITeam
-import com.seboba.sports.ui.search.toUITeam
+import com.seboba.sports.model.toUITeam
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -58,29 +58,29 @@ class EventListViewModel : ViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                teamDataResponse.value = it.teams.first().toUITeam()
+                teamDataResponse.value = it.teams?.first()?.toUITeam()
             },{
-                Log.e("What happened?", it.message)
+                Log.e("What happened?","Error: ${it.message}")
             })
         )
     }
 
     private fun loadTeamImagesURLSByIds(ids: List<Int>) {
-        val obs: List<Single<TeamIDAndImage>> = ids.toSet().map {
-            dataSource.getTeamDetails(it)
-                .map { it.teams.first().let { TeamIDAndImage(it.idTeam, it.strTeamBadge) } }
+        val obs: List<Single<TeamIDAndImage>> = ids.toSet().map { id ->
+            dataSource.getTeamDetails(id)
+                .map { responseModel -> responseModel.teams?.first().let { TeamIDAndImage(it?.idTeam ?: 0, it?.strTeamBadge ?: "") } }
         }
 
         compositeDisposable.add(
             Single.zip<TeamIDAndImage, List<TeamIDAndImage>>(obs) { args ->
-                args.map { it as TeamIDAndImage }
+                args.filterIsInstance<TeamIDAndImage>()
             }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                 eventTeamIDs.value = it
             }, {
-                Log.e("What happened?", it.message)
+                Log.e("What happened?", "Error: ${it.message}")
             })
         )
     }

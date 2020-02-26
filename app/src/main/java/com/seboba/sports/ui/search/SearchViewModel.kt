@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.seboba.remote.sports.SportsRemoteDataSource
-import com.seboba.remote.sports.TeamsModel
 import com.seboba.sports.model.UITeam
+import com.seboba.sports.model.toUITeam
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -35,28 +35,13 @@ class SearchViewModel : ViewModel() {
         dataSource.searchTeams(term)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .map { it.teams.toUITeam() }
+            .map { it.teams?.toUITeam() ?: emptyList() }
             .subscribe ({
                 teamsResponse.value = it
             }, {
-                Log.e("MainViewModel", it.message)
+                Log.e("MainViewModel", "Error: ${it.message}")
             })
         )
     }
 
-}
-
-fun List<TeamsModel>.toUITeam(): List<UITeam>? = map { it.toUITeam() }
-
-fun TeamsModel.toUITeam(): UITeam {
-    return UITeam(
-        id = idTeam,
-        name = strTeam ?: "Unknown",
-        iconURL = strTeamBadge,
-        bannerURL = strTeamBanner,
-        fanArtURL = strTeamFanart1,
-        isFavorite = false,
-        sport = strSport ?: "Unknown",
-        score = strDivision ?: strLeague ?: "Unknown"
-    )
 }

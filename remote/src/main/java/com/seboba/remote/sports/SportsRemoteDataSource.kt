@@ -1,7 +1,6 @@
 package com.seboba.remote.sports
 
 import com.seboba.remote.HttpInterceptor
-import io.reactivex.Observable
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -11,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class SportsRemoteDataSource: SportsDataSource {
 
     private val api: SportsDataSource
-    private val URL = "https://thesportsdb.com/api/"
+    private val baseUrl = "https://thesportsdb.com/api/"
 
     init {
         val client = OkHttpClient.Builder()
@@ -23,7 +22,7 @@ class SportsRemoteDataSource: SportsDataSource {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(URL)
+            .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(client)

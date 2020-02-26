@@ -1,6 +1,5 @@
 package com.seboba.sports.ui.search
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,7 +37,7 @@ class SearchFragment : Fragment() {
             recyclerView.adapter?.notifyDataSetChanged()
         }
 
-    fun respondToSearch(){
+    private fun respondToSearch(){
         viewModel.searchTeams(editTextTextPersonName.text.toString())
     }
 
@@ -52,14 +51,10 @@ class SearchFragment : Fragment() {
 
         button.setOnClickListener { respondToSearch() }
 
-        editTextTextPersonName.setOnEditorActionListener { v, actionId, event ->
+        editTextTextPersonName.setOnEditorActionListener { _, _, _ ->
             respondToSearch()
             return@setOnEditorActionListener true
         }
-
-        val prefs = requireContext().getSharedPreferences("Dope Prefs", Context.MODE_PRIVATE)
-
-
     }
 
 }

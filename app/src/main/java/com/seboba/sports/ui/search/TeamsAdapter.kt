@@ -1,17 +1,12 @@
 package com.seboba.sports.ui.search
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.core.content.edit
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.seboba.sports.R
@@ -19,11 +14,11 @@ import com.seboba.sports.model.UITeam
 
 class TeamsAdapter(private val list: List<UITeam>, private val itemClicked: (teamID: Int) -> Unit) : RecyclerView.Adapter<TeamsAdapter.TeamViewHolder>() {
     class TeamViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val icon = itemView.findViewById<ImageView>(R.id.team_icon)
-        val name = itemView.findViewById<TextView>(R.id.team_name)
-        val text1 = itemView.findViewById<TextView>(R.id.team_text)
-        val text2 = itemView.findViewById<TextView>(R.id.team_text1)
-        val favoriteTeam = itemView.findViewById<ImageButton>(R.id.favorite_button)
+        val icon: ImageView = itemView.findViewById(R.id.team_icon)
+        val name: TextView = itemView.findViewById(R.id.team_name)
+        val text1: TextView = itemView.findViewById(R.id.team_text)
+        val text2: TextView = itemView.findViewById(R.id.team_text1)
+        val favoriteTeam: ImageButton = itemView.findViewById(R.id.favorite_button)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeamViewHolder {
@@ -39,7 +34,7 @@ class TeamsAdapter(private val list: List<UITeam>, private val itemClicked: (tea
     override fun onBindViewHolder(holder: TeamViewHolder, position: Int) {
         val team = list[position]
         holder.name.text = team.name
-        holder.text1.text = team.score
+        holder.text1.text = team.league
         holder.text2.text = team.sport
 
         holder.itemView.setOnClickListener { itemClicked.invoke(team.id) }
@@ -55,7 +50,7 @@ class TeamsAdapter(private val list: List<UITeam>, private val itemClicked: (tea
                 .load("${team.iconURL}/preview")
                 .centerCrop()
                 .placeholder(R.drawable.ic_launcher_foreground)
-                .into(holder.icon);
+                .into(holder.icon)
         }
 
         val prefs = holder.itemView.context.getSharedPreferences("Dope Prefs", Context.MODE_PRIVATE)
@@ -79,11 +74,5 @@ class TeamsAdapter(private val list: List<UITeam>, private val itemClicked: (tea
         } else {
             holder.favoriteTeam.setImageResource(R.drawable.ic_favorite)
         }
-    }
-
-    fun favoriteClicked(){
-
-
-
     }
 }

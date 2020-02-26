@@ -10,13 +10,13 @@ import com.bumptech.glide.Glide
 import com.seboba.sports.R
 import com.seboba.sports.model.UIEvent
 
-class EventsAdapter(private val list: List<UIEvent>, val selectedTeamID: Int) : RecyclerView.Adapter<EventsAdapter.TeamViewHolder>() {
+class EventsAdapter(private val list: List<UIEvent>, private val selectedTeamID: Int) : RecyclerView.Adapter<EventsAdapter.TeamViewHolder>() {
     class TeamViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val icon1 = itemView.findViewById<ImageView>(R.id.icon_team_1)
-        val icon2 = itemView.findViewById<ImageView>(R.id.icon_team_2)
-        val score1 = itemView.findViewById<TextView>(R.id.score_team_1)
-        val score2 = itemView.findViewById<TextView>(R.id.score_team_2)
-        val winLoss = itemView.findViewById<TextView>(R.id.win_loss)
+        val icon1: ImageView = itemView.findViewById(R.id.icon_team_1)
+        val icon2: ImageView = itemView.findViewById(R.id.icon_team_2)
+        val score1: TextView = itemView.findViewById(R.id.score_team_1)
+        val score2: TextView = itemView.findViewById(R.id.score_team_2)
+        val winLoss: TextView = itemView.findViewById(R.id.win_loss)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeamViewHolder {
@@ -54,8 +54,7 @@ class EventsAdapter(private val list: List<UIEvent>, val selectedTeamID: Int) : 
     }
 
     private fun setImageSafe(image: ImageView, teamID: Int?, itemView: View){
-        val imageURL = teamImages.get(teamID)
-        setImageSafe(image, imageURL, itemView)
+        setImageSafe(image, teamImages[teamID], itemView)
     }
 
     private fun setImageSafe(image: ImageView, url: String?, itemView: View){
