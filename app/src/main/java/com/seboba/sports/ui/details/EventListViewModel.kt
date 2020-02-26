@@ -8,8 +8,7 @@ import com.seboba.remote.sports.Results
 import com.seboba.remote.sports.SportsRemoteDataSource
 import com.seboba.sports.model.UIEvent
 import com.seboba.sports.model.UITeam
-import com.seboba.sports.ui.main.toUITeam
-import io.reactivex.Observable
+import com.seboba.sports.ui.search.toUITeam
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

@@ -1,4 +1,4 @@
-package com.seboba.sports.ui.main
+package com.seboba.sports.ui.search
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -12,7 +12,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 
-class MainViewModel : ViewModel() {
+class FavoritesViewModel : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
     private val dataSource = SportsRemoteDataSource()
@@ -30,6 +30,10 @@ class MainViewModel : ViewModel() {
         loadTeams(term)
     }
 
+    init {
+        loadTeams("Dortmund")
+    }
+
     private fun loadTeams(term: String) {
         compositeDisposable.add(
         dataSource.searchTeams(term)
@@ -44,17 +48,4 @@ class MainViewModel : ViewModel() {
         )
     }
 
-}
-
-fun List<TeamsModel>.toUITeam(): List<UITeam>? = map { it.toUITeam() }
-
-fun TeamsModel.toUITeam(): UITeam {
-    return UITeam(
-        id = idTeam,
-        name = strTeam ?: "Unknown",
-        iconURL = strTeamBadge,
-        bannerURL = strTeamBanner,
-        fanArtURL = strTeamFanart1,
-        isFavorite = false
-    )
 }

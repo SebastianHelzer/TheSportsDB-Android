@@ -1,4 +1,4 @@
-package com.seboba.sports.ui.main
+package com.seboba.sports.ui.search
 
 import android.view.LayoutInflater
 import android.view.View
